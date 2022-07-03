@@ -158,13 +158,21 @@ jobs:
           name: Install dependencies
           command: |
             apk add --update ansible
-            apk add --no-cache aws-cli
+            apk update \
+                && apk --no-cache add curl \
+                && apk --no-cache add unzip \
+                && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
+                && unzip awscliv2.zip \
+                && ./aws/install
             apk add --update tar gzip
 
       - run:
           name: Configure server
           command: |
-            ansible-playbook -i ./project/.circleci/ansible/inventory.txt ./project/.circleci/ansible/configure-server.yml
+            pwd
+            ls
+            cd .circleci/ansible/
+            ansible-playbook -i inventory.txt configure-server.yml
       # Here's where you will add some code to rollback on failure
 workflows:
   default:
@@ -189,3 +197,6 @@ workflows:
             - test-backend
             - scan-frontend
             - scan-backend
+      - configure-infrastructure:
+          requires:
+            - deploy-infrastructure

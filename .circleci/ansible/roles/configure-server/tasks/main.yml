@@ -1,0 +1,33 @@
+---
+
+- name: Update apt packages
+  become: true
+  become_method: sudo
+  apt:
+    update_cache: yes
+
+- name: upgrade packages
+  become: true
+  apt:
+    upgrade: true
+
+- name: Add node source ppa
+  become: true
+  shell: |
+    curl -s https://deb.nodesource.com/setup_13.x | sudo bash
+    apt-get update
+
+- name: install nodejs 13
+  become: true
+  apt:
+    name: [ "nodejs"]
+    state: latest
+    update_cache: yes
+
+- name: install pm2
+  become: yes
+  npm:
+    name: pm2
+    global: yes
+    production: yes
+    state: present

@@ -7,9 +7,8 @@
     dest: .
 
 - name: Start the web server
+  become: true
   shell: |
-    pwd
-    ls
     pm2 stop default
     pm2 start npm -- start
 

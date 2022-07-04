@@ -200,20 +200,15 @@ jobs:
 
   deploy-frontend:
     docker:
-      - image: amazon/aws-cli
+      - image: python:3.10-alpine3.16
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/
       - run:
           name: Install dependencies
           command: |
-            yum -y update
-            yum install -y tar gzip
-            yum install curl
-            curl --silent --location https://rpm.nodesource.com/setup_13.x | bash -
-            yum -y install nodejs
-            yum install python37
-            curl -O https://bootstrap.pypa.io/get-pip.py
-            python3 get-pip.py --user
+            apk add --update --no-cache tar gzip nodejs npm aws-cli curl
       - run:
           name: Get backend url
           command: |

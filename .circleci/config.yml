@@ -203,16 +203,15 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
-      - attach_workspace:
-          at: ~/
       - run:
           name: Install dependencies
           command: |
             yum -y update
-            yum install gcc-c++ make
+            yum install -y tar gzip
+            yum install curl
             curl --silent --location https://rpm.nodesource.com/setup_13.x | bash -
             yum -y install nodejs
-            sudo yum install python37
+            yum install python37
             curl -O https://bootstrap.pypa.io/get-pip.py
             python3 get-pip.py --user
       - run:

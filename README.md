@@ -1,3 +1,4 @@
+[![adamako](https://circleci.com/gh/adamako/cdond-c3-projectstarter.svg?style=shield)](https://github.com/adamako/cdond-c3-projectstarter/)
 [![adamako](https://circleci.com/gh/adamako/cdond-c3-projectstarter.svg?style=svg)](https://github.com/adamako/cdond-c3-projectstarter/)
 
 We are archiving this repository because we do not want learners to push personal development to the current repository. If you have any issues or suggestions to make, feel free to:

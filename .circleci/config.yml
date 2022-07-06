@@ -32,6 +32,7 @@ commands:
             then
               cd ~/project/backend
               npm install
+              npm run build
               npm run migration:revert
             fi
 
@@ -209,6 +210,7 @@ jobs:
           command: |
             cd backend
             npm install
+            npm run build
             npm run migrations > migrations_dump.txt
             cat migrations_dump.txt
       - run:
@@ -322,10 +324,10 @@ jobs:
             else
               return 1
             fi
-#      - destroy-environment:
-#          workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
-#      - revert-migrations:
-#          workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
+      - destroy-environment:
+          workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
+      - revert-migrations:
+          workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
 
 workflows:
   default:

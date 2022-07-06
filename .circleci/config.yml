@@ -167,6 +167,8 @@ jobs:
           root: ~/
           paths:
             - ./project/.circleci/ansible/inventory.txt
+      - destroy-environment:
+          workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
   configure-infrastructure:
     docker:
       - image: python:3.7-alpine3.11
@@ -220,7 +222,8 @@ jobs:
               echo ${CIRCLE_WORKFLOW_ID:0:7}
               curl --insecure https://kvdb.io/MjQwMcgGbszGJZAkAzyMSj/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
             fi
-
+      - destroy-environment:
+          workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
 
   deploy-frontend:
     docker:
@@ -252,6 +255,9 @@ jobs:
 
       - destroy-environment:
           workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
+      - revert-migrations:
+          workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
+
   deploy-backend:
     docker:
       - image: python:3.7-alpine3.11
@@ -285,6 +291,8 @@ jobs:
 
       - destroy-environment:
           workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
+      - revert-migrations:
+          workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
 
   smoke-test:
     docker:
@@ -317,10 +325,43 @@ jobs:
             echo ${URL}
             if curl -s "${URL}/api/status" | grep "welcome"
             then
-              return 1
+              return 0
             else
               return 1
             fi
+      - destroy-environment:
+          workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
+      - revert-migrations:
+          workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
+
+  cloudfront-update:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            yum install -y tar gzip
+      - run:
+          name: Update cloudfront distribution
+          command: |
+            export OldWorkflowID= $(aws cloudformation \
+                        list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
+                        --no-paginate --output text)
+
+            echo $OldWorkflowID >> ~/OldWorkflowID.txt
+            cat ~/OldWorkflowID.txt
+
+            aws cloudformation deploy \
+              --template-file .circleci/files/cloudfront.yml \
+              --stack-name "InitialStack-${OldWorkflowID}" \
+              --parameter-overrides WorkflowID="udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --tags project=udapeople
+
+            echo OldWorkflowID: "${OldWorkflowID}"
+            echo Current OldWorkFlow Id: "${CIRCLE_WORKFLOW_ID:0:7}"
+
       - destroy-environment:
           workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
       - revert-migrations:
@@ -365,3 +406,6 @@ workflows:
           requires:
             - deploy-frontend
             - deploy-backend
+      - cloudfront-update:
+          requires:
+            - smoke-test

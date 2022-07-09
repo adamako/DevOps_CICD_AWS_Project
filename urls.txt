@@ -4,5 +4,5 @@ URL01: https://github.com/adamako/cdond-c3-projectstarter
 
 		S3 Bucket
 		---------
-URL02: http://udapeople-907820f.s3-website-us-east-1.amazonaws.com/
+URL02: http://udapeople-46a377f.s3-website-us-east-1.amazonaws.com/
 

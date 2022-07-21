@@ -1,5 +1,5 @@
-[![adamako](https://circleci.com/gh/adamako/cdond-c3-projectstarter.svg?style=shield)](https://github.com/adamako/cdond-c3-projectstarter/)
-[![adamako](https://circleci.com/gh/adamako/cdond-c3-projectstarter.svg?style=svg)](https://github.com/adamako/cdond-c3-projectstarter/)
+[![adamako](https://circleci.com/gh/adamako/DevOps_CICD_AWS_Project3.svg?style=shield)](https://github.com/adamako/DevOps_CICD_AWS_Project3/)
+[![adamako](https://circleci.com/gh/adamako/DevOps_CICD_AWS_Project3.svg?style=svg)](https://github.com/adamako/DevOps_CICD_AWS_Project3/)
 
 We are archiving this repository because we do not want learners to push personal development to the current repository. If you have any issues or suggestions to make, feel free to:
 - Utilize the https://knowledge.udacity.com/ forum to seek help on content-specific issues.

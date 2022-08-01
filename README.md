@@ -1,5 +1,5 @@
-[![adamako](https://circleci.com/gh/adamako/DevOps_CICD_AWS_Project3.svg?style=shield)](https://github.com/adamako/DevOps_CICD_AWS_Project3/)
-[![adamako](https://circleci.com/gh/adamako/DevOps_CICD_AWS_Project3.svg?style=svg)](https://github.com/adamako/DevOps_CICD_AWS_Project3/)
+[![adamako](https://circleci.com/gh/adamako/DevOps_CICD_AWS_Project.svg?style=shield)](https://app.circleci.com/pipelines/github/adamako/DevOps_CICD_AWS_Project)
+[![adamako](https://circleci.com/gh/adamako/DevOps_CICD_AWS_Project.svg?style=svg)](https://app.circleci.com/pipelines/github/adamako/DevOps_CICD_AWS_Project)
 
 ## Give your Application Auto-Deploy Superpowers
 
